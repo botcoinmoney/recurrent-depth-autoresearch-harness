@@ -21,6 +21,7 @@ fi
 mkdir -p "${TARGET_DIR}"
 cp -R "${ROOT_DIR}/templates/." "${TARGET_DIR}/"
 mkdir -p "${TARGET_DIR}/handoff"
+cp "${ROOT_DIR}/START_HERE.md" "${TARGET_DIR}/handoff/START_HERE.md"
 cp "${ROOT_DIR}/README.md" "${TARGET_DIR}/handoff/README.md"
 cp "${ROOT_DIR}/RULES.md" "${TARGET_DIR}/handoff/RULES.md"
 cp "${ROOT_DIR}/ORCHESTRATOR_RULES.md" "${TARGET_DIR}/handoff/ORCHESTRATOR_RULES.md"

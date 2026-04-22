@@ -28,7 +28,10 @@ Track one concrete experiment campaign cleanly and reproducibly.
 
 1. `RULES.md`
 2. `ORCHESTRATOR_RULES.md`
-3. `handoff/docs/PRIOR_EXPERIMENT_FINDINGS.md`
-4. `handoff/docs/RESEARCH_SYNTHESIS.md`
-5. `findings.md`
+3. `handoff/START_HERE.md`
+4. `handoff/docs/CANONICAL_TESTING_METHODS.md`
+5. `handoff/docs/GPU_OPTIMIZATION_CHECKLIST.md`
+6. `handoff/docs/PRIOR_EXPERIMENT_FINDINGS.md`
+7. `handoff/docs/RESEARCH_SYNTHESIS.md`
+8. `findings.md`
 

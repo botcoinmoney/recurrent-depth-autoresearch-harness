@@ -16,4 +16,5 @@ This repository contains live run state.
 - push often
 - keep logs and artifacts named by phase and timestamp
 - stop and investigate the actual failure when something breaks
+- follow the bundled `handoff/docs/CANONICAL_TESTING_METHODS.md` and `handoff/docs/GPU_OPTIMIZATION_CHECKLIST.md` rather than improvising method details
 

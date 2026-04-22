@@ -52,7 +52,9 @@ Before starting the main run, `docs/GPU_OPTIMIZATION_CHECKLIST.md` must also pas
 4. Create the live private run repo:
    - `bash scripts/create_run_repo.sh botcoin-lt-run-$(date -u +%Y%m%d-%H%M)`
 5. Move into the live run repo and commit immediately.
-6. Start baseline setup and baseline gates only.
+6. Validate the live run repo:
+   - `python3 handoff/scripts/preflight_check.py --root .`
+7. Start baseline setup and baseline gates only.
 
 ## What Success Looks Like
 

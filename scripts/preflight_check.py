@@ -40,8 +40,10 @@ def main() -> int:
         print("\n".join(failures))
         return 1
 
+    docs_root = root / "handoff" if (root / "handoff").exists() else root
+
     for rel in REQUIRED_DOCS:
-        check_path(root, rel, failures)
+        check_path(docs_root, rel, failures)
 
     findings = root / "findings.md"
     if root.name.startswith("botcoin-lt-run-") or (root / "handoff").exists():

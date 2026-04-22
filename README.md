@@ -83,8 +83,9 @@ Before any real run:
 1. Create a new private GitHub repo for the live experiment.
 2. Copy in the templates from `templates/`.
 3. Copy the bundled `handoff/` snapshot into that run repo so it remains self-contained after handoff.
-4. Commit immediately.
-5. Use that run repo, not this handoff repo, for live logs, code changes, and experiment artifacts.
+4. Validate the live run repo with `python3 handoff/scripts/preflight_check.py --root .`
+5. Commit immediately.
+6. Use that run repo, not this handoff repo, for live logs, code changes, and experiment artifacts.
 
 Use:
 

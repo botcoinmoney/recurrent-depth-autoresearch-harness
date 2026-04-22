@@ -2,7 +2,10 @@
 
 This document is for a fresh `H100` Linux instance.
 
-The preferred first-wave configuration is now `8xH100` when available. The methods still work on `4xH100`, but the canonical wallclock plan in this repo now assumes `8xH100` so the first wave can finish in about `16` hours instead of stretching toward a full-day rental.
+Use this rule:
+
+- if `8xH100` is available, use the canonical short-wallclock plan in this repo
+- if only `4xH100` is available, use the same methods with a looser wallclock and reduced concurrency
 
 The orchestrator should complete this setup before cloning or launching the live run repo.
 
@@ -163,7 +166,8 @@ The orchestrator should keep these defaults unless a documented reason requires 
 Run:
 
 ```bash
-python3 scripts/preflight_check.py --root "$HOME/runs/<live-run-repo>"
+cd "$HOME/runs/<live-run-repo>"
+python3 handoff/scripts/preflight_check.py --root .
 ```
 
 Proceed only if:

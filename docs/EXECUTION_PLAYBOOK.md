@@ -4,9 +4,11 @@ This is the end-to-end operational sequence for the orchestrator.
 
 It assumes:
 
-- fresh `8xH100` machine when available
+- fresh `8xH100` machine for the preferred short-wallclock plan
 - this handoff repo is cloned
 - a separate live private run repo will be created
+
+If only `4xH100` is available, use the same phase order and same methods, but reduce concurrency and accept a longer wallclock.
 
 ## Phase 0: Bootstrap
 
@@ -17,7 +19,9 @@ It assumes:
 3. create the live run repo with:
    - `bash scripts/create_run_repo.sh <repo-name>`
 4. move into the live run repo
-5. create the first commit
+5. validate the live run repo:
+   - `python3 handoff/scripts/preflight_check.py --root .`
+6. create the first commit
 
 ## Phase 1: Live Run Repo Initialization
 
@@ -169,6 +173,15 @@ Recommended GPU spread:
 - use all free GPUs for probes, benchmark reruns, and result aggregation fan-out
 
 The orchestrator should prioritize keeping evaluation and output gates unblocked over rigidly preserving one exact GPU index.
+
+### Fallback `4xH100` utilization plan
+
+If only `4xH100` is available:
+
+- keep `1 GPU` worth of capacity available for output gates, probes, or eval when possible
+- run the same phase order
+- prefer fewer concurrent jobs over ambiguous scheduling
+- do not invent new methods or reorder the strategy precedence just because the machine is smaller
 
 ## Phase 7: Per-Variant Required Sequence
 

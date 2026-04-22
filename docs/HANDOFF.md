@@ -50,8 +50,9 @@ Read `docs/RESEARCH_SYNTHESIS.md` for why these survived the weighing process.
 2. validate this repo
 3. create the live private run repo
 4. confirm the live run repo contains the bundled `handoff/` directory with docs/configs/scripts
-5. commit the starting state in that live repo
-6. start the baseline gates
+5. run `python3 handoff/scripts/preflight_check.py --root .` inside the live run repo
+6. commit the starting state in that live repo
+7. start the baseline gates
 
 ## What To Never Do
 
