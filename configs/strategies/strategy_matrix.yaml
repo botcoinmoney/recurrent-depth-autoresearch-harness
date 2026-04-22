@@ -1,7 +1,7 @@
 version: 1
 global_framing:
   run_type: signal_hunt
-  primary_question: "Which first-wave strategy shows the strongest credible signal that BOTCOIN-style multi-hop traces can shape recurrent hidden-state geometry for natural-language reasoning under a 4xH100 budget?"
+  primary_question: "Which first-wave strategy shows the strongest credible signal that BOTCOIN-style multi-hop traces can shape recurrent hidden-state geometry for natural-language reasoning under an 8xH100 first-wave budget, while keeping wallclock near 16 hours?"
   baseline_anchor:
     hotpotqa_t8:
       em: 8.0

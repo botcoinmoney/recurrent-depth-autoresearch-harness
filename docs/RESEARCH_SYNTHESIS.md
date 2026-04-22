@@ -32,7 +32,7 @@ Keep these ideas:
 
 Do **not** inherit Pass 1 literally where it overreaches:
 
-- from-scratch Parcae-scale rebuilding of a new looped model is **not** first-wave priority on `4xH100`
+- from-scratch Parcae-scale rebuilding of a new looped model is **not** first-wave priority on an `8xH100` signal-hunt budget
 - aggressive architectural rewrites are a second-wave response if first-wave retrofits show real signal
 - several ideas in Pass 1 are best treated as conceptual imports, not immediate implementation commitments
 
@@ -163,7 +163,7 @@ Why it matters:
 Operational takeaway:
 
 - its logic should shape first-wave interpretation and second-wave design
-- but full LoopFormer-style architecture changes are better treated as **design priors** and a second-wave scaling path, not the very first `4xH100` run
+- but full LoopFormer-style architecture changes are better treated as **design priors** and a second-wave scaling path, not the very first `8xH100` run
 
 #### `Parcae 2026`
 
@@ -276,7 +276,7 @@ Why this is grounded:
 
 ## What Was Deliberately Demoted
 
-These ideas are not rejected forever. They are demoted because they are not the best first-wave use of `4xH100`.
+These ideas are not rejected forever. They are demoted because they are not the best first-wave use of an `8xH100` signal-hunt budget.
 
 ### Full from-scratch Parcae build
 

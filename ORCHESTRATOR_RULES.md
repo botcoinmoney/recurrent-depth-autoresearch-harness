@@ -8,7 +8,7 @@ If you skip gates, weaken tests, or silently substitute a different path, you ar
 
 ## Mission
 
-Produce a ranked, evidence-backed decision on the five first-wave recurrent-depth strategies under a `4xH100` budget, with valid probes, valid benchmark readouts, and clean logging.
+Produce a ranked, evidence-backed decision on the five first-wave recurrent-depth strategies under an `8xH100` first-wave budget when available, with valid probes, valid benchmark readouts, and clean logging.
 
 ## Absolute Rules
 

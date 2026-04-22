@@ -54,5 +54,5 @@ The first wave is a signal hunt, not a productization run and not a claim of sol
 
 The actual question is:
 
-`Which training/data strategy shows the strongest credible evidence that BOTCOIN-style data can shape recurrent hidden-state geometry for natural-language multi-hop reasoning under a 4xH100 budget?`
+`Which training/data strategy shows the strongest credible evidence that BOTCOIN-style data can shape recurrent hidden-state geometry for natural-language multi-hop reasoning under an 8xH100 first-wave budget, while keeping wallclock near 16 hours?`
 

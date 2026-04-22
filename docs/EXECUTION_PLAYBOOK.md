@@ -4,7 +4,7 @@ This is the end-to-end operational sequence for the orchestrator.
 
 It assumes:
 
-- fresh `4xH100` machine
+- fresh `8xH100` machine when available
 - this handoff repo is cloned
 - a separate live private run repo will be created
 
@@ -124,6 +124,40 @@ Reason:
 - Strategy 3 and 5 are comparatively cheap and decision-efficient
 - Strategy 2 is the strongest but more expensive installed-structure bet
 - Strategy 4 depends on the latent classifier gate
+
+### Canonical `8xH100` utilization plan
+
+Target:
+
+- finish the first wave in about `16` wallclock hours
+- keep all 8 GPUs productive
+
+Recommended GPU spread:
+
+#### Phase A: baseline plus probe baseline
+
+- GPU `0-1`: baseline smoke, baseline benchmark anchor, then Strategy 1 hidden-state extraction / probe work
+- GPU `2-7`: dataset prep, model prefetch, and script validation on CPU until baseline gates pass; do not launch training early
+
+#### Phase B: first parallel wave
+
+- GPU `0-1`: Strategy 3 training
+- GPU `2-3`: Strategy 5 Arm A
+- GPU `4-5`: Strategy 5 Arm B
+- GPU `6`: Strategy 4 classifier gate / trajectory-classifier Phase A
+- GPU `7`: output gates and quick evals for jobs that finish first
+
+#### Phase C: second parallel wave
+
+- GPU `0-3`: Strategy 2 training
+- GPU `4-5`: Strategy 4 training / reranking path
+- GPU `6-7`: probe fan-out and external benchmark evals on completed Phase B variants
+
+#### Phase D: wrap-up
+
+- use all free GPUs for probes, benchmark reruns, and result aggregation fan-out
+
+The orchestrator should prioritize keeping evaluation and output gates unblocked over rigidly preserving one exact GPU index.
 
 ## Phase 7: Per-Variant Required Sequence
 

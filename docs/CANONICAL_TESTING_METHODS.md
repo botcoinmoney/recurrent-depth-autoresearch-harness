@@ -18,7 +18,9 @@ If this file conflicts with other planning prose, use this file for the **testin
 
 ## Scope
 
-This file governs the first-wave `4xH100` signal hunt only.
+This file governs the first-wave `8xH100` signal hunt only when that hardware is available.
+
+If only `4xH100` is available, the same methods still apply, but the wallclock schedule becomes looser.
 
 It does **not** define second-wave scale-up or from-scratch looped model training.
 
@@ -42,7 +44,7 @@ The first wave is not trying to prove that latent reasoning is solved.
 
 It is trying to answer:
 
-`Which training/data strategy shows the strongest credible signal that BOTCOIN-style multi-hop traces can shape recurrent hidden-state geometry for natural-language reasoning under a 4xH100 budget?`
+`Which training/data strategy shows the strongest credible signal that BOTCOIN-style multi-hop traces can shape recurrent hidden-state geometry for natural-language reasoning under an 8xH100 first-wave budget, while keeping wallclock near 16 hours?`
 
 ## Why These Five Strategies
 
@@ -51,7 +53,7 @@ These are the five methods that survived the weighing process because they are t
 - evidence strength
 - fit to BOTCOIN/DACR data
 - fit to a recurrent-depth base model
-- cost under `4xH100`
+- cost under `8xH100` with a short wallclock target
 - interpretability of outcomes
 
 The five first-wave strategies are:
@@ -167,6 +169,97 @@ Why:
 - Strategy 2 is the strongest installed-structure bet but costs more
 - Strategy 4 depends on the classifier gate and is best interpreted after the baseline probe story is known
 
+## Canonical `8xH100` Wallclock Plan
+
+The preferred first-wave rental target is:
+
+- about `8xH100`
+- about `16` wallclock hours
+- not more than roughly `128 GPU-hours` unless a documented rerun is justified
+
+This does **not** change the five strategies. It changes the spread of jobs, the concurrency, and when evaluation should start.
+
+### Stage 0: bootstrap and baseline
+
+Target wallclock:
+
+- about `0.0` to `2.0` hours
+
+Use:
+
+- `2 GPUs` for baseline/output/benchmark anchor work
+- remaining GPUs idle for training until the baseline gates pass
+
+Reason:
+
+- correctness still takes precedence over occupancy
+
+### Stage 1: Strategy 1 probe baseline
+
+Target wallclock:
+
+- about `2.0` to `4.0` hours
+
+Use:
+
+- `2 GPUs` to accelerate extraction and probe computation
+- remaining GPUs for non-training prep only
+
+Reason:
+
+- Strategy 1 still determines how to interpret the rest
+
+### Stage 2: first parallel wave
+
+Target wallclock:
+
+- about `4.0` to `9.0` hours
+
+Run concurrently:
+
+- Strategy 3 on `2 GPUs`
+- Strategy 5 Arm A on `2 GPUs`
+- Strategy 5 Arm B on `2 GPUs`
+- Strategy 4 classifier gate on `1 GPU`
+- keep `1 GPU` available for output gates and early eval fan-out
+
+Reason:
+
+- Strategy 3 and 5 are the best decision-efficiency use of early parallelism
+- Strategy 4 classifier gate is cheap enough to pull forward without changing the logic of the method
+
+### Stage 3: second parallel wave
+
+Target wallclock:
+
+- about `9.0` to `14.0` hours
+
+Run concurrently:
+
+- Strategy 2 on `4 GPUs`
+- Strategy 4 main training / reranking path on `2 GPUs`
+- use `2 GPUs` for probes and external benchmarks on completed Phase B outputs
+
+Reason:
+
+- Strategy 2 is the strongest installed-structure method and benefits most from extra GPUs
+- Strategy 4 is still comparatively cheap
+- using free GPUs for eval prevents a long tail at the end of the rental
+
+### Stage 4: closeout
+
+Target wallclock:
+
+- about `14.0` to `16.0` hours
+
+Use all available GPUs for:
+
+- remaining probe fan-out
+- benchmark reruns needed for valid artifacts
+- final result collection
+
+The orchestrator should prefer a complete valid matrix over trying to squeeze in new unplanned experiments.
+
 ## Strategy 1: Natural-Language Latent Probe Baseline
 
 ### Why This Survived
@@ -212,7 +305,7 @@ Run:
 
 ### Budget
 
-- about `6 GPU-hours`
+- about `6 GPU-hours`, but on `8xH100` it should complete in a much shorter wallclock slice because extraction and analysis can be parallelized
 
 ## Strategy 2: Hop-Aligned Auxiliary Supervision
 
@@ -275,7 +368,7 @@ Mechanism:
 
 ### Budget
 
-- about `22 GPU-hours`
+- about `22 GPU-hours`; on `8xH100` this is the main candidate to spread across more GPUs in order to shrink wallclock
 
 ## Strategy 3: Dynamic Recurrence Plus Hop Curriculum
 
@@ -328,7 +421,7 @@ Eval:
 
 ### Budget
 
-- about `18 GPU-hours`
+- about `18 GPU-hours`; on `8xH100` it belongs in the first parallel wave
 
 ## Strategy 4: Trajectory-Classifier Amplification
 
@@ -382,7 +475,7 @@ Phase C:
 
 ### Budget
 
-- about `20 GPU-hours`
+- about `20 GPU-hours`; on `8xH100` the classifier gate should be pulled forward into the first parallel wave
 
 ## Strategy 5: Boundary-Token Format A/B
 
@@ -440,7 +533,7 @@ Keep matched:
 
 ### Budget
 
-- about `16 GPU-hours`
+- about `16 GPU-hours`; on `8xH100` the two A/B arms should each get dedicated parallel capacity
 
 ## Shared Evaluation Rules Across All Strategies
 
@@ -498,6 +591,18 @@ Use this exact logic:
 - if Strategy 4 wins: prioritize latent-signal amplification and reranking
 - if Strategy 5 wins: change BOTCOIN data generation format before larger training
 - if Strategy 1 shows no useful structure and the others fail: stop and revisit data/measurement before larger compute
+
+## Resource-Use Rule
+
+With `8xH100`, the orchestrator should try to keep all GPUs productive **after** the baseline gates pass.
+
+But this does **not** justify:
+
+- launching training before baseline validity
+- skipping output gates
+- overlapping phases in ways that make interpretation ambiguous
+
+The point of `8xH100` is to reduce wallclock, not to weaken the scientific design.
 
 ## One-Sentence Mental Model
 

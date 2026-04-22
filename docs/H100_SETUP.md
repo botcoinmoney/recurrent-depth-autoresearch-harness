@@ -1,6 +1,8 @@
-# 4xH100 Setup
+# H100 Setup
 
-This document is for a fresh `4xH100` Linux instance.
+This document is for a fresh `H100` Linux instance.
+
+The preferred first-wave configuration is now `8xH100` when available. The methods still work on `4xH100`, but the canonical wallclock plan in this repo now assumes `8xH100` so the first wave can finish in about `16` hours instead of stretching toward a full-day rental.
 
 The orchestrator should complete this setup before cloning or launching the live run repo.
 
@@ -102,8 +104,12 @@ PY
 
 Minimum expected result:
 
-- 4 visible GPUs
+- at least 4 visible GPUs
 - no unexplained memory pressure before the run starts
+
+Preferred result:
+
+- 8 visible GPUs
 
 ## Stable Cache Path
 
@@ -147,7 +153,7 @@ This creates a separate repo under `$HOME/runs/` and bundles a `handoff/` snapsh
 The orchestrator should keep these defaults unless a documented reason requires change:
 
 - do not merge adapters
-- keep GPU 0 free for output gates or eval when possible
+- on `8xH100`, keep at least one GPU available for output gates, probes, or eval fan-out when possible
 - use isolated log directories
 - log every material event
 - push after each major phase

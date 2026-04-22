@@ -22,7 +22,7 @@ It is not:
 
 The first wave is trying to answer:
 
-`Which of the five probe strategies shows the strongest credible positive signal that BOTCOIN-style multi-hop traces can shape recurrent hidden-state geometry for natural-language reasoning under a 4xH100 budget?`
+`Which of the five probe strategies shows the strongest credible positive signal that BOTCOIN-style multi-hop traces can shape recurrent hidden-state geometry for natural-language reasoning under an 8xH100 first-wave budget, while keeping wallclock near 16 hours?`
 
 ## The Main Framing Corrections
 

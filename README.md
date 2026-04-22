@@ -1,6 +1,6 @@
 # BOTCOIN Latent Reasoning Orchestrator
 
-This repository is a standalone handoff package for running a BOTCOIN recurrent-depth transformer signal hunt on a fresh `4xH100` instance.
+This repository is a standalone handoff package for running a BOTCOIN recurrent-depth transformer signal hunt on a fresh `H100` instance set.
 
 It is intended to be **self-contained for a fresh machine**. The orchestrator should not need access to the original BOTCOIN workspace or this current system to understand the plan, the prior findings, or the guardrails.
 
@@ -29,7 +29,7 @@ Its purpose is not to be the training stack itself. Its purpose is to make the o
 
 The repo is intentionally opinionated.
 
-For a `4xH100` first wave, the best current bet is **not** a large from-scratch looped model build. The best bet is a tightly gated **signal hunt** around a strong recurrent-depth base model, BOTCOIN/DACR-style data, and five specific probes:
+For an `8xH100` first wave, the best current bet is **not** a large from-scratch looped model build. The best bet is a tightly gated **signal hunt** around a strong recurrent-depth base model, BOTCOIN/DACR-style data, and five specific probes:
 
 1. natural-language latent probe baseline
 2. hop-aligned auxiliary supervision

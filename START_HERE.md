@@ -8,7 +8,7 @@ Your job is not to “train the best model.”
 
 Your first-wave job is narrower:
 
-`Identify the most promising training/data strategy for shaping recurrent hidden-state geometry for natural-language multi-hop reasoning under a 4xH100 budget.`
+`Identify the most promising training/data strategy for shaping recurrent hidden-state geometry for natural-language multi-hop reasoning under an 8xH100 first-wave budget, while keeping wallclock near 16 hours.`
 
 This is a signal hunt with strict gates.
 
