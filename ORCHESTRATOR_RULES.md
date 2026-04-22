@@ -104,15 +104,17 @@ Require alignment across:
 
 ## Required Read Order
 
-1. `README.md`
-2. `RULES.md`
-3. `docs/H100_SETUP.md`
-4. `docs/PRIOR_EXPERIMENT_FINDINGS.md`
-5. `docs/DEPENDENCIES_AND_SOURCES.md`
-6. `docs/RESEARCH_SYNTHESIS.md`
-7. `docs/MEASUREMENT_AND_GATES.md`
-8. `docs/EXECUTION_PLAYBOOK.md`
-9. `docs/HANDOFF.md`
+1. `START_HERE.md`
+2. `README.md`
+3. `RULES.md`
+4. `docs/H100_SETUP.md`
+5. `docs/PRIOR_EXPERIMENT_FINDINGS.md`
+6. `docs/DEPENDENCIES_AND_SOURCES.md`
+7. `docs/RESEARCH_SYNTHESIS.md`
+8. `docs/MEASUREMENT_AND_GATES.md`
+9. `docs/EXECUTION_PLAYBOOK.md`
+10. `docs/COMMON_FAILURE_MODES.md`
+11. `docs/HANDOFF.md`
 
 ## Run Discipline
 

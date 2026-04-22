@@ -15,6 +15,7 @@ Its purpose is not to be the training stack itself. Its purpose is to make the o
 
 ## What This Package Contains
 
+- `START_HERE.md`: the single entrypoint for a fresh orchestrator
 - `ORCHESTRATOR_RULES.md`: non-negotiable run discipline
 - `RULES.md`: top-level experiment philosophy and safety constraints
 - `docs/`: full end-to-end execution guide, research synthesis, setup, measurement, and handoff docs
@@ -60,15 +61,17 @@ python3 scripts/preflight_check.py --root .
 
 Then read, in order:
 
-1. `ORCHESTRATOR_RULES.md`
-2. `docs/H100_SETUP.md`
-3. `docs/PRIOR_EXPERIMENT_FINDINGS.md`
-4. `docs/DEPENDENCIES_AND_SOURCES.md`
-5. `docs/RESEARCH_SYNTHESIS.md`
-6. `docs/E2E_PIPELINE.md`
-7. `docs/EXECUTION_PLAYBOOK.md`
-8. `docs/MEASUREMENT_AND_GATES.md`
-9. `docs/HANDOFF.md`
+1. `START_HERE.md`
+2. `ORCHESTRATOR_RULES.md`
+3. `docs/H100_SETUP.md`
+4. `docs/PRIOR_EXPERIMENT_FINDINGS.md`
+5. `docs/DEPENDENCIES_AND_SOURCES.md`
+6. `docs/RESEARCH_SYNTHESIS.md`
+7. `docs/E2E_PIPELINE.md`
+8. `docs/EXECUTION_PLAYBOOK.md`
+9. `docs/MEASUREMENT_AND_GATES.md`
+10. `docs/COMMON_FAILURE_MODES.md`
+11. `docs/HANDOFF.md`
 
 ## Required Orchestrator Behavior
 

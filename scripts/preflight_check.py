@@ -9,11 +9,13 @@ from pathlib import Path
 
 
 REQUIRED_DOCS = [
+    "START_HERE.md",
     "README.md",
     "RULES.md",
     "ORCHESTRATOR_RULES.md",
     "docs/PRIOR_EXPERIMENT_FINDINGS.md",
     "docs/DEPENDENCIES_AND_SOURCES.md",
+    "docs/COMMON_FAILURE_MODES.md",
 ]
 
 
