@@ -51,6 +51,25 @@ For the main first wave, the baseline should roughly match the known repaired nu
 
 Treat `±2` points on a small smoke set as acceptable drift. Larger drift means the environment, prompt path, or model path changed.
 
+## Transfer Gates
+
+The experiment is not a transfer success unless the signal can move beyond BOTCOIN structure.
+
+Pass only if the run records a clear outcome for each rung that the strategy targets:
+
+1. BOTCOIN structural fidelity
+2. natural-language multi-hop transfer
+3. causal reasoning transfer
+
+At minimum, the run should include:
+
+- HotpotQA
+- MuSiQue if available
+- DROP
+- one causal suite when available, such as CausalQA or COPA
+
+If a strategy improves only the BOTCOIN rung and leaves multi-hop transfer flat, treat that as an internal-structure result, not a first-wave win.
+
 ## Probe Validity Gates
 
 Probe claims are valid only if all are true:
@@ -103,6 +122,7 @@ Primary question:
 Win signal:
 
 - probe AUC improves with depth by a material amount
+- if a causal suite is run, the signal should not disappear entirely on the causal rung
 
 Negative but useful signal:
 
@@ -118,6 +138,7 @@ Require:
 
 - improved bridge/entity or analogous probe signal
 - some behavioral corroboration or at least no collapse
+- at least one external multi-hop benchmark moving in the right direction
 
 ### Strategy 3: Dynamic-R plus curriculum
 
@@ -128,6 +149,7 @@ Primary question:
 Require:
 
 - monotone or materially positive score-vs-depth behavior
+- the multi-hop gain should not rely on prompt-format leakage
 
 ### Strategy 4: Trajectory-classifier amplification
 
@@ -139,6 +161,7 @@ Require:
 
 - classifier remains discriminative
 - reranking or guided sampling produces a measurable lift
+- the lift should be visible on at least one real multi-hop benchmark
 
 ### Strategy 5: Boundary-token A/B
 
@@ -149,6 +172,7 @@ Primary question:
 Require:
 
 - A/B delta on matched runs
+- if the A/B helps only internal probes but not multi-hop transfer, it is not a deployment win
 
 ## Decision Logic
 
@@ -157,14 +181,16 @@ Interpret outcomes with the following hierarchy:
 ### Strong positive
 
 - probe signal moves
-- benchmark signal moves
+- benchmark signal moves on multi-hop tasks
 - depth behavior becomes more favorable
+- causal transfer is stable if it was measured
 - no collapse or invalidation
 
 ### Weak positive
 
 - probe moves but behavior does not
 - or behavior moves but probe remains ambiguous
+- or the result improves internal structure but does not yet prove multi-hop transfer
 
 ### Informative negative
 
@@ -196,3 +222,7 @@ The final summary for each strategy should have:
   - demote
   - stop
 
+Also note:
+
+- whether the result moved BOTCOIN structure only, multi-hop transfer, causal transfer, or both
+- whether the causal rung was measured or intentionally deferred

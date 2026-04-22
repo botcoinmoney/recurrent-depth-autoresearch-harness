@@ -39,6 +39,11 @@ Inside the live run repo:
    - cache path
    - target model
    - target datasets
+4. initialize the run manifest from `configs/run_manifest.yaml`
+5. record the transfer ladder targets:
+   - BOTCOIN structural fidelity
+   - natural-language multi-hop transfer
+   - causal reasoning transfer
 
 Commit and push.
 
@@ -73,13 +78,15 @@ The orchestrator should distinguish between:
 
 - training corpus
 - probe corpus
+- transfer-eval corpus
 - benchmark corpus
 
 The strategy family here assumes:
 
 - BOTCOIN/DACR clean positives for training
 - balanced positive/negative examples for probes
-- HotpotQA / DROP / MuSiQue-style external behavior checks
+- HotpotQA / DROP / MuSiQue-style external behavior checks for multi-hop transfer
+- a causal suite when available for the final transfer rung
 
 Before continuing:
 
@@ -87,6 +94,7 @@ Before continuing:
 2. record filtering rules
 3. record any context-length exclusions
 4. record challenge-disjoint or grouped split design
+5. record which evaluation suites are being used for multi-hop transfer and causal transfer
 
 Commit and push.
 
@@ -226,7 +234,8 @@ At the end, produce a matrix with:
 - strategy
 - status
 - probe result
-- behavioral result
+- multi-hop behavioral result
+- causal result if measured
 - depth result
 - failure modes
 - recommendation
@@ -244,7 +253,7 @@ Use this prior when scores are ambiguous:
 
 - if hop-aligned supervision wins, BOTCOIN traces are likely useful as latent step teachers
 - if dynamic-R wins, recurrence-aware training is the main missing ingredient
-- if trajectory amplification wins, Huginn already had structure and BOTCOIN data mainly sharpens it
+- if trajectory amplification wins, the recurrent-depth base already had useful structure and BOTCOIN data mainly sharpens it
 - if boundary A/B wins, future BOTCOIN data generation should change
 - if nothing wins, do not escalate to larger compute until the measurement story is fixed
-
+- if a strategy improves BOTCOIN-only structure but not multi-hop transfer, do not count it as a scale-up win yet

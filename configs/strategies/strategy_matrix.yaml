@@ -1,7 +1,20 @@
 version: 1
 global_framing:
   run_type: signal_hunt
-  primary_question: "Which first-wave strategy shows the strongest credible signal that BOTCOIN-style multi-hop traces can shape recurrent hidden-state geometry for natural-language reasoning under an 8xH100 first-wave budget, while keeping wallclock near 16 hours?"
+  primary_question: "Which first-wave strategy shows the strongest credible signal that BOTCOIN-style multi-hop traces can shape recurrent hidden-state geometry for natural-language multi-hop reasoning and causal reasoning under an 8xH100 first-wave budget, while keeping wallclock near 16 hours?"
+  transfer_ladder:
+    - botcoin_structural_fidelity
+    - real_natural_language_multi_hop
+    - causal_reasoning
+  real_transfer_targets:
+    multi_hop:
+      - HotpotQA
+      - MuSiQue
+      - DROP
+    causal:
+      - CausalQA
+      - COPA
+  run_manifest_template: configs/run_manifest.yaml
   baseline_anchor:
     hotpotqa_t8:
       em: 8.0
@@ -26,15 +39,16 @@ strategies:
     order: 1
     priority: highest
     hypothesis: "Base recurrent depth may already contain measurable natural-language multi-hop signal; if so, later strategies should amplify rather than install structure."
+    transfer_stage: botcoin_structural_fidelity
     why_this_exists:
       - "Pass 2 correctly treated the probe baseline as the measuring instrument for the entire matrix."
       - "Pass 1 correctly emphasized that latent instability and rank inconsistency must be observed directly, not inferred from benchmark scores."
       - "Local repaired experiment history showed measurement bugs can invalidate conclusions, so the probe must come first."
-      - "Lu-style weak per-step signal and Du-style strong pooled-trajectory signal claims remain unresolved on natural-language multi-hop and therefore both probe families must be run."
+      - "Lu-style weak per-step signal and Du-style strong pooled-trajectory signal claims remain unresolved on natural-language multi-hop and therefore both probe families must be run before any transfer claim is made."
     grounded_evidence:
       papers:
-        - "Lu et al. 2025 arithmetic probe critique of Huginn-like latent step structure"
-        - "Du et al. 2025/2026 LTO trajectory classifier results"
+        - "Lu-style latent step probe critique"
+        - "trajectory-level latent credit assignment / pooled classifier results"
       local_findings:
         - "repaired probe path and balanced probe corpus are mandatory"
         - "training before valid measurement led to unusable conclusions"
@@ -59,6 +73,7 @@ strategies:
     order: 2
     priority: highest
     hypothesis: "Step-aligned latent supervision can install stable hop-aware recurrent structure using DACR trace steps as direct supervision targets."
+    transfer_stage: real_natural_language_multi_hop
     why_this_exists:
       - "Pass 1 identified latent step alignment as the best way to turn explicit DACR traces into implicit computation targets."
       - "Pass 2 operationalized this with a budgeted SIM-CoT-style auxiliary decoder plan."
@@ -66,7 +81,7 @@ strategies:
     grounded_evidence:
       papers:
         - "SIM-CoT 2025 / ICLR 2026"
-        - "Ren 2025 per-depth Huginn supervision precedent"
+        - "per-depth recurrent supervision precedent"
       local_findings:
         - "high-rank or overtrained runs collapsed"
         - "small, conservative core-focused runs were the only repaired positives"
@@ -74,6 +89,7 @@ strategies:
     data_requirements:
       - DACR_examples_with_3plus_extractions_and_linear_step_alignment
       - external_eval_hotpotqa
+      - external_eval_musique_if_available
       - external_eval_drop
     metrics:
       primary:
@@ -92,6 +108,7 @@ strategies:
     order: 3
     priority: high
     hypothesis: "Recurrence-aware training with hop curriculum transfers from synthetic implicit reasoning to natural-language multi-hop and improves score as inference depth increases."
+    transfer_stage: real_natural_language_multi_hop
     why_this_exists:
       - "Pass 2 correctly elevated Kohli-style dynamic-R and curriculum as the most principled recurrence-aware recipe."
       - "Pass 1 correctly emphasized depth extrapolation failure and overthinking as central recurrent-depth problems."
@@ -107,6 +124,7 @@ strategies:
     data_requirements:
       - DACR_bucketed_by_hop_count
       - external_eval_hotpotqa
+      - external_eval_musique_if_available
     metrics:
       primary:
         - score_by_inference_depth
@@ -122,19 +140,21 @@ strategies:
     order: 4
     priority: high
     hypothesis: "The base model already contains usable latent correctness signal; DACR training and latent reranking can sharpen that signal without installing step structure."
+    transfer_stage: real_natural_language_multi_hop
     why_this_exists:
       - "Pass 2 correctly preserved this as the main alternative hypothesis to step-installed structure."
       - "Pass 1's focus on latent geometry and separability maps naturally onto trajectory-level discrimination."
       - "BOTCOIN raw attempts provide same-context positive/negative trajectories unusually well."
     grounded_evidence:
       papers:
-        - "Du et al. 2025/2026 LTO"
+        - "trajectory-level latent credit assignment"
       local_findings:
         - "dataset audit identified abundant positive/negative raw attempts and same-session contrasts"
     budget_gpu_hours: 20
     data_requirements:
       - DACR_positive_negative_pairs
       - external_eval_hotpotqa
+      - external_eval_causal_suite_if_available
     metrics:
       primary:
         - classifier_auc_pre_and_post
@@ -151,6 +171,7 @@ strategies:
     order: 5
     priority: medium
     hypothesis: "Explicit hop boundaries may provide useful alignment handles, but they may also worsen format overfitting; this must be decided empirically."
+    transfer_stage: real_natural_language_multi_hop
     why_this_exists:
       - "Pass 1 correctly suggested boundary structure as a latent-alignment handle."
       - "Pass 2 correctly reframed it as a cheap A/B decision rather than a baked-in assumption."
@@ -165,6 +186,7 @@ strategies:
     data_requirements:
       - matched_control_and_treatment_corpora
       - external_eval_hotpotqa
+      - external_eval_musique_if_available
       - external_eval_drop
     metrics:
       primary:
@@ -176,4 +198,3 @@ strategies:
     fail_interpretation:
       - "near-zero delta means current format is sufficient at this scale"
       - "negative delta means boundary tokens likely increase harmful format overfitting"
-

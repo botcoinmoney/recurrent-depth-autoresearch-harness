@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import os
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -13,11 +14,17 @@ REQUIRED_DOCS = [
     "README.md",
     "RULES.md",
     "ORCHESTRATOR_RULES.md",
+    "docs/RESEARCH_REFRESH_2026.md",
     "docs/PRIOR_EXPERIMENT_FINDINGS.md",
     "docs/CANONICAL_TESTING_METHODS.md",
     "docs/DEPENDENCIES_AND_SOURCES.md",
     "docs/GPU_OPTIMIZATION_CHECKLIST.md",
     "docs/COMMON_FAILURE_MODES.md",
+]
+
+REQUIRED_HELPERS = [
+    "scripts/checkpoint_commit_push.sh",
+    "scripts/gpu_status.py",
 ]
 
 
@@ -29,6 +36,11 @@ def check_path(root: Path, rel_path: str, failures: list[str]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", required=True, help="Repo root to validate")
+    parser.add_argument(
+        "--check-gpu",
+        action="store_true",
+        help="Validate that at least one GPU is visible via nvidia-smi",
+    )
     args = parser.parse_args()
 
     root = Path(args.root).resolve()
@@ -44,11 +56,16 @@ def main() -> int:
 
     for rel in REQUIRED_DOCS:
         check_path(docs_root, rel, failures)
+    for rel in REQUIRED_HELPERS:
+        check_path(docs_root, rel, failures)
 
     findings = root / "findings.md"
+    run_manifest = root / "run_manifest.yaml"
     if root.name.startswith("botcoin-lt-run-") or (root / "handoff").exists():
         if not findings.exists():
             failures.append("Live run repo should contain findings.md")
+        if not run_manifest.exists():
+            failures.append("Live run repo should contain run_manifest.yaml")
 
     for tool in ("git", "gh", "python3"):
         if shutil.which(tool) is None:
@@ -57,6 +74,24 @@ def main() -> int:
     for env_name in ("HF_HOME", "TRANSFORMERS_CACHE"):
         if not os.environ.get(env_name):
             failures.append(f"Environment variable not set: {env_name}")
+
+    if args.check_gpu:
+        if shutil.which("nvidia-smi") is None:
+            failures.append("Missing required executable: nvidia-smi")
+        else:
+            try:
+                output = subprocess.run(
+                    ["nvidia-smi", "-L"],
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                ).stdout.strip()
+            except (OSError, subprocess.CalledProcessError) as exc:
+                failures.append(f"Unable to query GPUs: {exc}")
+            else:
+                visible = [line for line in output.splitlines() if line.strip()]
+                if not visible:
+                    failures.append("No GPUs visible via nvidia-smi")
 
     if failures:
         print("Preflight failed:")
@@ -70,4 +105,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-

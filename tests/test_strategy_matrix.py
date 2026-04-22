@@ -8,6 +8,13 @@ def test_strategy_matrix_contains_five_grounded_strategies():
     path = root / "configs" / "strategies" / "strategy_matrix.yaml"
     data = yaml.safe_load(path.read_text())
 
+    transfer_ladder = data["global_framing"]["transfer_ladder"]
+    assert transfer_ladder == [
+        "botcoin_structural_fidelity",
+        "real_natural_language_multi_hop",
+        "causal_reasoning",
+    ]
+
     strategies = data["strategies"]
     assert len(strategies) == 5
 
@@ -16,6 +23,7 @@ def test_strategy_matrix_contains_five_grounded_strategies():
         assert strategy["grounded_evidence"]["papers"]
         assert strategy["grounded_evidence"]["local_findings"]
         assert strategy["budget_gpu_hours"] > 0
+        assert strategy["transfer_stage"] in transfer_ladder
 
 
 def test_self_contained_docs_exist():
@@ -25,9 +33,10 @@ def test_self_contained_docs_exist():
         root / "docs" / "PRIOR_EXPERIMENT_FINDINGS.md",
         root / "docs" / "CANONICAL_TESTING_METHODS.md",
         root / "docs" / "DEPENDENCIES_AND_SOURCES.md",
+        root / "docs" / "RESEARCH_REFRESH_2026.md",
         root / "docs" / "GPU_OPTIMIZATION_CHECKLIST.md",
         root / "docs" / "COMMON_FAILURE_MODES.md",
+        root / "docs" / "RUN_MANIFEST_GUIDE.md",
     ]
     for path in required:
         assert path.exists(), f"Missing required self-contained doc: {path}"
-

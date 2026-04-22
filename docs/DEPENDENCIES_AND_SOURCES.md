@@ -61,12 +61,14 @@ Purpose:
 Use your standard internal or public access path for:
 
 - HotpotQA
+- MuSiQue
 - DROP
-- MuSiQue if available
+- CausalQA or COPA if available
+- StrategyQA-style causal plausibility checks if available
 
 Purpose:
 
-- primary first-wave external behavior checks
+- primary first-wave external behavior checks for multi-hop and causal transfer
 
 ## Paper Sources
 
@@ -74,13 +76,17 @@ These papers are not mirrored here, but their relevant conclusions are already d
 
 Key references:
 
-- `Geiping et al. 2025` recurrent depth / latent reasoning
-- `Kohli et al. 2026` Loop, Think, & Generalize
-- `SIM-CoT 2025 / ICLR 2026`
-- `LTO 2025 / ICLR 2026`
-- `LoopFormer 2026`
-- `Parcae 2026`
-- `ETD 2025`
+- `Geiping et al. 2025`, "Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach" (arXiv:2502.05171)
+- `Wei et al. 2025`, "SIM-CoT: Supervised Implicit Chain-of-Thought" (arXiv:2509.20317)
+- `Koishekenov et al. 2025`, "Encode, Think, Decode: Scaling test-time reasoning with recursive latent thoughts" (arXiv:2510.07358)
+- `Kohli et al. 2026`, "Loop, Think, & Generalize: Implicit Reasoning in Recurrent-Depth Transformers" (arXiv:2604.07822)
+- `Jeddi et al. 2026`, "LoopFormer: Elastic-Depth Looped Transformers for Latent Reasoning via Shortcut Modulation" (arXiv:2602.11451)
+- `Prairie et al. 2026`, "Parcae: Scaling Laws For Stable Looped Language Models" (arXiv:2604.12946)
+- `Yu et al. 2025`, "Causal Sufficiency and Necessity Improves Chain-of-Thought Reasoning" (arXiv:2506.09853)
+- `Rewarding Latent Thought Trajectories` 2026, "Prioritize the Process, Not Just the Outcome: Rewarding Latent Thought Trajectories Improves Reasoning in Looped Language Models" (trajectory-level latent credit assignment)
+- `Wang 2026`, "LLM Reasoning Is Latent, Not the Chain of Thought" (position paper for latent-state-centric evaluation)
+
+For a dated, April 22, 2026 refresh with exact paper framing and transfer implications, see `docs/RESEARCH_REFRESH_2026.md`.
 
 ## Fresh-System Rule
 
@@ -90,4 +96,3 @@ If the orchestrator is missing information and cannot access the original BOTCOI
 2. the external sources listed here
 
 It should **not** assume any hidden local files exist elsewhere.
-

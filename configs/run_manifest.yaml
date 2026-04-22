@@ -1,0 +1,58 @@
+version: 1
+mission:
+  primary_question: "Which first-wave strategy transfers BOTCOIN-style challenge traces into real natural-language multi-hop and causal reasoning under an 8xH100 budget?"
+  transfer_ladder:
+    - stage: botcoin_structural_fidelity
+      focus: "Does the model preserve and expose the intended BOTCOIN/DACR step structure?"
+      required_evidence:
+        - "balanced probe AUC by depth"
+        - "parseable output rate"
+    - stage: real_multi_hop_transfer
+      focus: "Does the signal survive on real natural-language multi-hop tasks?"
+      required_evidence:
+        - "HotpotQA"
+        - "MuSiQue"
+        - "DROP"
+    - stage: causal_transfer
+      focus: "Does the signal survive on causal reasoning tasks?"
+      required_evidence:
+        - "CausalQA or COPA when available"
+        - "StrategyQA-style causal plausibility checks if the named suite is unavailable"
+  required_run_sections:
+    - machine_inventory
+    - auth_and_cache_state
+    - model_and_dataset_snapshot
+    - baseline_anchor
+    - gpu_map
+    - eval_queue
+    - stop_conditions
+    - findings_log
+  phase_checklists:
+    bootstrap:
+      - "validate the handoff repo"
+      - "create the live run repo"
+      - "commit immediately"
+    pre_training:
+      - "record model commit"
+      - "record prompt contract hash"
+      - "record dataset snapshot IDs"
+      - "record current benchmark anchor"
+      - "confirm output gate capacity"
+      - "confirm no stale probe artifacts"
+    per_variant:
+      - "train"
+      - "output gate"
+      - "probe"
+      - "multi-hop eval"
+      - "causal eval where applicable"
+      - "commit findings"
+    closeout:
+      - "record ladder outcome"
+      - "record next-step recommendation"
+      - "archive artifacts"
+  stop_conditions:
+    - "delimiter garbage or template continuation"
+    - "baseline parseability failure"
+    - "probe invalidation"
+    - "multi-hop lift absent after a valid probe"
+    - "causal transfer absent after a valid multi-hop signal"

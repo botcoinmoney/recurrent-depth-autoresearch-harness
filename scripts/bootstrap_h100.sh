@@ -11,7 +11,7 @@ if [[ ! -d "${HOME}/venvs/botcoin-lt" ]]; then
 fi
 
 source "${HOME}/venvs/botcoin-lt/bin/activate"
-python -m pip install --upgrade pip
+python -m pip install --upgrade pip setuptools wheel
 
 cat <<'EOF'
 Bootstrap complete.
@@ -19,7 +19,8 @@ Bootstrap complete.
 Next:
 1. export HF_HOME=$HOME/.cache/huggingface
 2. export TRANSFORMERS_CACHE=$HOME/.cache/huggingface
-3. clone the orchestrator repo
-4. install the repo with pip install -e ".[dev]"
+3. export HUGGINGFACE_HUB_CACHE=$HOME/.cache/huggingface
+4. clone the orchestrator repo
+5. install the repo with pip install -e ".[dev]"
+6. run make kickoff once the repo is cloned
 EOF
-

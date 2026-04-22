@@ -1,6 +1,6 @@
 # Research Synthesis
 
-This document explains **why the first-wave probe strategies exist**, how the two BOTCOIN research passes were weighed against each other, and how those ideas were corrected using the distilled prior experiment findings in this repository plus the strongest late-2025/2026 literature.
+This document explains **why the first-wave probe strategies exist**, how the two BOTCOIN research passes were weighed against each other, and how those ideas were corrected using the distilled prior experiment findings in this repository plus the strongest current 2025-2026 literature.
 
 The orchestrator should read this before interpreting the strategy matrix. The goal is to prevent cargo-cult execution.
 
@@ -16,13 +16,19 @@ The two research passes contributed different strengths:
 The final strategy framing in this repository gives **more operational weight to Pass 2**, but keeps a few of Pass 1's best insights where they sharpen the orchestrator's understanding:
 
 1. looped models fail in **specific**, repeated ways: collapse, rank instability, depth overthinking, and format leakage
-2. BOTCOIN/DACR data is valuable because it gives **structured multi-hop chains**, not because it is magical by itself
+2. BOTCOIN/DACR data is valuable because it gives **structured multi-hop chains**, but the signal only matters if it transfers to natural-language multi-hop and then to causal reasoning
 3. first-wave runs should search for **signal**, not pretend to settle the whole latent-reasoning question
 
 The cleanest summary is:
 
 - **Pass 2 provides the structure**
 - **Pass 1 provides the research-backed specificity when an exact design choice determines whether the test is valid**
+
+The transfer rule for this repository is simple:
+
+1. prove BOTCOIN structural fidelity first
+2. test whether that structure transfers to real natural-language multi-hop
+3. only then treat causal reasoning as a meaningful out-of-domain check
 
 ## What Was Kept From Each Pass
 
@@ -108,11 +114,11 @@ The first wave is grounded in a specific evidence stack, not generic “looped t
 
 ### Core architectural papers
 
-#### `Geiping et al. 2025` recurrent-depth Huginn / latent reasoning
+#### `Geiping et al. 2025` - `Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach`
 
 Why it matters:
 
-- establishes Huginn-style recurrent depth as a serious test-time compute axis
+- establishes recurrent depth as a serious test-time compute axis
 - legitimizes variable recurrence as a real lever
 - supports using a recurrent-depth base model rather than inventing a new architecture first
 
@@ -121,7 +127,7 @@ Operational takeaway:
 - use a recurrent-depth base model as the scaffold
 - evaluate depth scaling explicitly
 
-#### `Kohli et al. 2026` Loop, Think, & Generalize
+#### `Kohli et al. 2026` - `Loop, Think, & Generalize: Implicit Reasoning in Recurrent-Depth Transformers`
 
 Why it matters:
 
@@ -134,7 +140,7 @@ Operational takeaway:
 - dynamic `R` and hop-count curriculum deserve a first-wave slot
 - overthinking must be measured, not hand-waved
 
-#### `SIM-CoT 2025/ICLR 2026`
+#### `SIM-CoT 2025` - `SIM-CoT: Supervised Implicit Chain-of-Thought`
 
 Why it matters:
 
@@ -146,13 +152,13 @@ Operational takeaway:
 
 - hop-aligned auxiliary supervision is the **highest-evidence installed-structure strategy**
 
-#### `LTO 2025/ICLR 2026`
+#### `Encode, Think, Decode 2025` - `Encode, Think, Decode: Scaling test-time reasoning with recursive latent thoughts`
 
 Why it matters:
 
-- shows that Huginn latent trajectories contain readable correctness signal
+- shows that recursive latent trajectories can be amplified without changing the base architecture
 - creates a credible alternative hypothesis to “install structure from scratch”
-- suggests trajectory-level reward modeling may amplify an already present latent signal
+- suggests trajectory-level credit assignment may amplify an already present latent signal
 
 Operational takeaway:
 
@@ -182,6 +188,19 @@ Operational takeaway:
 - use Parcae to justify second-wave from-scratch work only if first-wave retrofits show signal
 - keep Parcae in the synthesis so the orchestrator understands what “next” looks like if retrofits succeed
 
+#### `Yu et al. 2025` - `Causal Sufficiency and Necessity Improves Chain-of-Thought Reasoning`
+
+Why it matters:
+
+- gives the first wave a causal lens for checking whether apparent reasoning gains are actually necessary and sufficient
+- is the most direct bridge from multi-hop transfer to causal reasoning transfer
+- helps distinguish real reasoning from shortcut learning in the final evaluation ladder
+
+Operational takeaway:
+
+- use a causal suite as the final transfer rung when the environment supports it
+- treat a multi-hop-only win as incomplete if the causal rung stays flat
+
 ## Why The Five First-Wave Strategies Survived The Weighing Process
 
 The strategies below are not equal-weight copies of the rough passes. They are the result of weighing:
@@ -190,6 +209,12 @@ The strategies below are not equal-weight copies of the rough passes. They are t
 - Pass 2 operational thresholds
 - repaired local experiment findings
 - late-2025/2026 primary papers
+
+They are also ordered by the transfer ladder that matters for this project:
+
+1. does the model expose BOTCOIN structural fidelity at all
+2. does that structure transfer to real natural-language multi-hop
+3. does it continue to matter on causal reasoning tasks
 
 ### Strategy 1: Natural-language latent probe baseline
 
@@ -248,7 +273,7 @@ Why this is grounded:
 
 Why it survived:
 
-- `LTO` shows the latent signal may already exist
+- trajectory-level latent credit assignment work shows the latent signal may already exist
 - this gives a mechanistically different bet from Strategies 2 and 3
 - DACR has same-task positive/negative attempt structure, which makes it unusually suitable for classifier-driven trajectory supervision
 
@@ -289,7 +314,7 @@ Demoted because:
 
 - highest implementation burden
 - strongest benefit appears after first-wave viability is already established
-- less aligned with the repaired local Huginn-based infrastructure
+- less aligned with the repaired local recurrent-depth infrastructure
 
 ### Large-scale full-parameter continued pretraining
 
@@ -319,7 +344,7 @@ The orchestrator should hold the following mental model:
 4. **Run the cheap data-format decision in parallel where possible**:
    - boundary-token A/B
 5. Use the outcomes to decide whether second wave should be:
-   - larger Huginn retrofit,
+   - larger recurrent-depth retrofit,
    - elastic-depth training,
    - or from-scratch stable looped modeling
 
@@ -329,7 +354,6 @@ The first wave is not proving “latent reasoning works.”
 
 It is proving, or disproving, a narrower and more decision-useful claim:
 
-`BOTCOIN-style structured multi-hop traces can measurably shift recurrent hidden-state geometry and/or depth-dependent behavior on real natural-language reasoning tasks under a tightly constrained compute budget.`
+`BOTCOIN-style structured multi-hop traces can measurably shift recurrent hidden-state geometry and then transfer that signal to real natural-language multi-hop reasoning, and ideally to causal reasoning, under a tightly constrained compute budget.`
 
 That framing is the reason the strategy matrix exists in its current form.
-

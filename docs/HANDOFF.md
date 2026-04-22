@@ -22,7 +22,7 @@ It is not:
 
 The first wave is trying to answer:
 
-`Which of the five probe strategies shows the strongest credible positive signal that BOTCOIN-style multi-hop traces can shape recurrent hidden-state geometry for natural-language reasoning under an 8xH100 first-wave budget, while keeping wallclock near 16 hours?`
+`Which of the five probe strategies shows the strongest credible positive signal that BOTCOIN-style multi-hop traces can shape recurrent hidden-state geometry for natural-language multi-hop reasoning and causal reasoning under an 8xH100 first-wave budget, while keeping wallclock near 16 hours?`
 
 ## The Main Framing Corrections
 
@@ -33,6 +33,7 @@ Carry these forward into every decision:
 3. output gates matter as much as train loss
 4. DACR-Bench can be misleading early if the prompt/output contract is not aligned
 5. strategy ranking matters more than any single raw score
+6. BOTCOIN-only structure is not enough unless it transfers to real tasks
 
 ## The Five First-Wave Strategies
 
@@ -68,5 +69,5 @@ Read `docs/RESEARCH_SYNTHESIS.md` for why these survived the weighing process.
 - benchmark artifacts with parseable rates
 - probe artifacts for valid variants
 - a ranked strategy matrix
+- a filled run manifest with the transfer ladder outcome
 - a recommended next move
-

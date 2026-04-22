@@ -20,7 +20,9 @@ Its purpose is not to be the training stack itself. Its purpose is to make the o
 - `RULES.md`: top-level experiment philosophy and safety constraints
 - `docs/`: full end-to-end execution guide, research synthesis, setup, measurement, and handoff docs
 - `docs/CANONICAL_TESTING_METHODS.md`: the single canonical testing-methods file reconstructed from the two research passes
+- `docs/RUN_MANIFEST_GUIDE.md`: live-run manifest guidance for transfer tracking, GPU allocation, and closeout discipline
 - `configs/`: environment, thresholds, and first-wave strategy definitions
+- `configs/run_manifest.yaml`: a concrete manifest template for the live run repo
 - `templates/`: starting files for the live per-run private repo
 - `scripts/`: bootstrap, preflight, validation, run-repo creation, and heartbeat helpers
 - `tests/`: lightweight contract tests so the scaffolding fails closed
@@ -29,7 +31,7 @@ Its purpose is not to be the training stack itself. Its purpose is to make the o
 
 The repo is intentionally opinionated.
 
-For an `8xH100` first wave, the best current bet is **not** a large from-scratch looped model build. The best bet is a tightly gated **signal hunt** around a strong recurrent-depth base model, BOTCOIN/DACR-style data, and five specific probes:
+For an `8xH100` first wave, the best current bet is **not** a large from-scratch looped model build. The best bet is a tightly gated **signal hunt** around a strong recurrent-depth base model, BOTCOIN/DACR-style data, and five specific probes that are judged by how well they transfer to real natural-language multi-hop and causal reasoning:
 
 1. natural-language latent probe baseline
 2. hop-aligned auxiliary supervision
@@ -39,11 +41,12 @@ For an `8xH100` first wave, the best current bet is **not** a large from-scratch
 
 The late-2025/2026 architectural work that most matters for second-wave scaling is:
 
-- `ETD` for selective recurrent retrofitting
+- `Encode, Think, Decode` for recursive latent retrofitting without changing the base architecture
 - `LoopFormer` for elastic-depth training
 - `Parcae` for stable from-scratch looped models
 - `SIM-CoT` for step-aligned latent supervision
-- `LTO` for latent trajectory reward modeling
+- trajectory-level latent credit assignment for reward shaping
+- causal sufficiency / necessity work that helps distinguish real reasoning from shortcut learning
 
 The repo folds those ideas into a practical execution order rather than chasing all of them at once.
 
@@ -69,12 +72,13 @@ Then read, in order:
 5. `docs/CANONICAL_TESTING_METHODS.md`
 6. `docs/DEPENDENCIES_AND_SOURCES.md`
 7. `docs/RESEARCH_SYNTHESIS.md`
-8. `docs/E2E_PIPELINE.md`
-9. `docs/EXECUTION_PLAYBOOK.md`
-10. `docs/MEASUREMENT_AND_GATES.md`
-11. `docs/GPU_OPTIMIZATION_CHECKLIST.md`
-12. `docs/COMMON_FAILURE_MODES.md`
-13. `docs/HANDOFF.md`
+8. `docs/RESEARCH_REFRESH_2026.md`
+9. `docs/E2E_PIPELINE.md`
+10. `docs/EXECUTION_PLAYBOOK.md`
+11. `docs/MEASUREMENT_AND_GATES.md`
+12. `docs/GPU_OPTIMIZATION_CHECKLIST.md`
+13. `docs/COMMON_FAILURE_MODES.md`
+14. `docs/HANDOFF.md`
 
 ## Required Orchestrator Behavior
 
@@ -115,7 +119,8 @@ At the end of a first wave, the orchestrator should produce:
 
 - one ranked matrix of the five strategies
 - probe deltas across depth
+- a clear read on BOTCOIN structural fidelity versus real multi-hop and causal transfer
 - benchmark deltas with parseable rates
+- a filled run manifest in the live run repo
 - a clear go/no-go decision for scale-up
 - a written rationale for the next most defensible training investment
-

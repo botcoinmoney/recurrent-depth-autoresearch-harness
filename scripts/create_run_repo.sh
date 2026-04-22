@@ -20,6 +20,7 @@ fi
 
 mkdir -p "${TARGET_DIR}"
 cp -R "${ROOT_DIR}/templates/." "${TARGET_DIR}/"
+cp "${ROOT_DIR}/configs/run_manifest.yaml" "${TARGET_DIR}/run_manifest.yaml"
 mkdir -p "${TARGET_DIR}/handoff"
 cp "${ROOT_DIR}/START_HERE.md" "${TARGET_DIR}/handoff/START_HERE.md"
 cp "${ROOT_DIR}/README.md" "${TARGET_DIR}/handoff/README.md"
@@ -34,14 +35,11 @@ git init
 git checkout -b main
 
 if ! gh repo view "botcoinmoney/${REPO_NAME}" >/dev/null 2>&1; then
-  gh repo create "botcoinmoney/${REPO_NAME}" --private --source . --remote origin --push
+  gh repo create "botcoinmoney/${REPO_NAME}" --private --source . --remote origin
 else
-  git remote add origin "git@github.com:botcoinmoney/${REPO_NAME}.git"
+  git remote add origin "https://github.com/botcoinmoney/${REPO_NAME}.git"
 fi
 
-git add .
-git commit -m "Initialize live experiment repo"
-git push -u origin main
+"${ROOT_DIR}/scripts/checkpoint_commit_push.sh" --message "Initialize live experiment repo"
 
 echo "Created live run repo at ${TARGET_DIR}"
-

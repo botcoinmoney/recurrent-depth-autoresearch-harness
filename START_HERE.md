@@ -21,11 +21,12 @@ This is a signal hunt with strict gates.
 5. `docs/H100_SETUP.md`
 6. `docs/DEPENDENCIES_AND_SOURCES.md`
 7. `docs/RESEARCH_SYNTHESIS.md`
-8. `docs/MEASUREMENT_AND_GATES.md`
-9. `docs/GPU_OPTIMIZATION_CHECKLIST.md`
-10. `docs/EXECUTION_PLAYBOOK.md`
-11. `docs/COMMON_FAILURE_MODES.md`
-12. `docs/HANDOFF.md`
+8. `docs/RESEARCH_REFRESH_2026.md`
+9. `docs/MEASUREMENT_AND_GATES.md`
+10. `docs/GPU_OPTIMIZATION_CHECKLIST.md`
+11. `docs/EXECUTION_PLAYBOOK.md`
+12. `docs/COMMON_FAILURE_MODES.md`
+13. `docs/HANDOFF.md`
 
 Do not start setup until you have read at least through `docs/MEASUREMENT_AND_GATES.md`.
 
@@ -54,7 +55,8 @@ Before starting the main run, `docs/GPU_OPTIMIZATION_CHECKLIST.md` must also pas
 5. Move into the live run repo and commit immediately.
 6. Validate the live run repo:
    - `python3 handoff/scripts/preflight_check.py --root .`
-7. Start baseline setup and baseline gates only.
+7. Fill in `run_manifest.yaml` at the root of the live run repo.
+8. Start baseline setup and baseline gates only.
 
 ## What Success Looks Like
 
@@ -75,4 +77,3 @@ Stop and re-read:
 - `docs/MEASUREMENT_AND_GATES.md`
 
 The repo is designed so you do not have to improvise.
-

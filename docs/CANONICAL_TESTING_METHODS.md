@@ -51,7 +51,19 @@ The first wave is not trying to prove that latent reasoning is solved.
 
 It is trying to answer:
 
-`Which training/data strategy shows the strongest credible signal that BOTCOIN-style multi-hop traces can shape recurrent hidden-state geometry for natural-language reasoning under an 8xH100 first-wave budget, while keeping wallclock near 16 hours?`
+`Which training/data strategy shows the strongest credible signal that BOTCOIN-style multi-hop traces can shape recurrent hidden-state geometry for natural-language multi-hop reasoning and causal reasoning under an 8xH100 first-wave budget, while keeping wallclock near 16 hours?`
+
+## Transfer Ladder
+
+The first wave is only useful if it clears the ladder in order:
+
+1. BOTCOIN structural fidelity
+2. real natural-language multi-hop transfer
+3. causal reasoning transfer
+
+Rule:
+
+- a strategy can only be called a real transfer win if it improves the rung it targets without collapsing the rungs below it
 
 ## Why These Five Strategies
 
@@ -292,7 +304,7 @@ Best combined logic from the two passes:
 Grounding:
 
 - Lu-style results suggest weak or discontinuous **per-iteration token-level** latent step structure.
-- Du/LTO-style results suggest strong **trajectory-level** latent correctness signal exists.
+- trajectory-level latent credit assignment results suggest strong **trajectory-level** latent correctness signal exists.
 - These are different probe families and must both be run to resolve the literature tension on natural-language multi-hop.
 
 ### Exact Method
@@ -334,6 +346,7 @@ These are intentionally different experiments. The disagreement between them is 
 
 - Lu-style per-iteration probe AUC by depth
 - Du-style pooled trajectory probe AUC
+- if the base probe is already strong, a small causal-suite sanity check can be added to test whether the signal survives beyond multi-hop
 
 ### Win Condition
 
@@ -424,7 +437,8 @@ Reason:
 
 ### Behavioral Corroboration
 
-- HotpotQA and DROP movement without collapse
+- HotpotQA, MuSiQue, and DROP movement without collapse
+- if available, a causal suite such as CausalQA or COPA should be checked without changing the prompt contract
 
 ### Win Condition
 
@@ -488,11 +502,11 @@ Eval:
 
 ### Primary Metric
 
-- behavioral score by inference depth
+- behavioral score by inference depth on multi-hop tasks, with a secondary causal-suite check where available
 
 ### Win Condition
 
-- monotone or clearly favorable score scaling from lower to moderate recurrence depth
+- monotone or clearly favorable score scaling from lower to moderate recurrence depth on multi-hop tasks, without regressions on causal transfer checks
 
 ### Interpretation
 
@@ -515,7 +529,7 @@ Best combined logic from the two passes:
 
 Grounding:
 
-- `LTO` shows latent correctness signal may already exist
+- trajectory-level latent credit assignment work shows latent correctness signal may already exist
 - BOTCOIN raw attempts provide unusually good positive/negative same-task contrasts
 
 ### Exact Method
@@ -541,12 +555,12 @@ Phase C:
 ### Primary Metrics
 
 - classifier AUC before and after training
-- reranked HotpotQA-style behavior
+- reranked HotpotQA-style and causal-suite behavior
 
 ### Win Condition
 
 - classifier remains discriminative
-- guided selection or reranking yields meaningful lift
+- guided selection or reranking yields meaningful lift on at least one external multi-hop benchmark, with causal transfer treated as a bonus check if the budget permits
 
 ### Interpretation
 
@@ -605,6 +619,7 @@ Reason:
 
 - HotpotQA EM delta
 - DROP EM delta
+- if available, a causal-suite delta
 
 ### Secondary Metric
 
@@ -612,7 +627,7 @@ Reason:
 
 ### Win Condition
 
-- treatment arm materially beats control, or shows a clear latent-structure win without behavioral loss
+- treatment arm materially beats control on at least one external multi-hop benchmark, or shows a clear latent-structure win without behavioral loss; if the budget allows, a causal-suite sanity check should be included
 
 ### Interpretation
 
@@ -631,6 +646,7 @@ Every valid strategy result should include:
 - post-train output gate result
 - benchmark outputs with parseable rate
 - probe outputs where applicable
+- a note on whether the result moved BOTCOIN structural fidelity, real multi-hop transfer, causal transfer, or none
 - findings entry with decision and rationale
 
 Do not keep any checkpoint in the comparison set if:
@@ -651,13 +667,15 @@ At the end of wave 1, each strategy must be classified as one of:
 ### Strong Positive
 
 - probe moves
-- behavior moves
+- behavior moves on at least one external multi-hop task
 - depth behavior improves
+- if a causal suite was run, it does not regress
 - no collapse
 
 ### Weak Positive
 
 - probe moves without clear behavior, or vice versa
+- or multi-hop improves while the causal rung remains untested
 
 ### Informative Negative
 
@@ -680,6 +698,7 @@ Use this exact logic:
 - if Strategy 4 wins: prioritize latent-signal amplification and reranking
 - if Strategy 5 wins: change BOTCOIN data generation format before larger training
 - if Strategy 1 shows no useful structure and the others fail: stop and revisit data/measurement before larger compute
+- if a strategy improves BOTCOIN-only structure but not multi-hop transfer, do not count it as a scale-up win yet
 
 ## Resource-Use Rule
 
@@ -698,4 +717,3 @@ The point of `8xH100` is to reduce wallclock, not to weaken the scientific desig
 The first wave is:
 
 `a tightly gated, evidence-ranked probe campaign using the strongest operational parts of Pass 2, sharpened by the best architectural insights from Pass 1, to decide which training method is worth scaling next.`
-
