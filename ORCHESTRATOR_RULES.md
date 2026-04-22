@@ -113,9 +113,10 @@ Require alignment across:
 7. `docs/DEPENDENCIES_AND_SOURCES.md`
 8. `docs/RESEARCH_SYNTHESIS.md`
 9. `docs/MEASUREMENT_AND_GATES.md`
-10. `docs/EXECUTION_PLAYBOOK.md`
-11. `docs/COMMON_FAILURE_MODES.md`
-12. `docs/HANDOFF.md`
+10. `docs/GPU_OPTIMIZATION_CHECKLIST.md`
+11. `docs/EXECUTION_PLAYBOOK.md`
+12. `docs/COMMON_FAILURE_MODES.md`
+13. `docs/HANDOFF.md`
 
 ## Run Discipline
 

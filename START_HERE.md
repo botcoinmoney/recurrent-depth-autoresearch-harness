@@ -22,13 +22,15 @@ This is a signal hunt with strict gates.
 6. `docs/DEPENDENCIES_AND_SOURCES.md`
 7. `docs/RESEARCH_SYNTHESIS.md`
 8. `docs/MEASUREMENT_AND_GATES.md`
-9. `docs/EXECUTION_PLAYBOOK.md`
-10. `docs/COMMON_FAILURE_MODES.md`
-11. `docs/HANDOFF.md`
+9. `docs/GPU_OPTIMIZATION_CHECKLIST.md`
+10. `docs/EXECUTION_PLAYBOOK.md`
+11. `docs/COMMON_FAILURE_MODES.md`
+12. `docs/HANDOFF.md`
 
 Do not start setup until you have read at least through `docs/MEASUREMENT_AND_GATES.md`.
 
 For the actual first-wave method design, `docs/CANONICAL_TESTING_METHODS.md` is the primary source of truth.
+Before starting the main run, `docs/GPU_OPTIMIZATION_CHECKLIST.md` must also pass.
 
 ## Immediate Operating Rules
 

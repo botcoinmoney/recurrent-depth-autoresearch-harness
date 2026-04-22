@@ -174,3 +174,5 @@ Proceed only if:
 - findings log exists
 - rules file exists
 
+Before the main run begins, also pass `docs/GPU_OPTIMIZATION_CHECKLIST.md`.
+

@@ -52,6 +52,17 @@ Before any expensive work:
 
 If any fail, stop and fix.
 
+### Phase 2B: Optimization readiness
+
+Before the main first-wave schedule begins:
+
+1. pass `docs/GPU_OPTIMIZATION_CHECKLIST.md`
+2. record the planned GPU map in `findings.md`
+3. record which capacity is reserved for output gates and eval
+4. record the expected throughput bottleneck
+
+Do not start the main schedule until this optimization checklist passes.
+
 ## Phase 3: Dataset Preparation
 
 The orchestrator should distinguish between:

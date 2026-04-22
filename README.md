@@ -72,8 +72,9 @@ Then read, in order:
 8. `docs/E2E_PIPELINE.md`
 9. `docs/EXECUTION_PLAYBOOK.md`
 10. `docs/MEASUREMENT_AND_GATES.md`
-11. `docs/COMMON_FAILURE_MODES.md`
-12. `docs/HANDOFF.md`
+11. `docs/GPU_OPTIMIZATION_CHECKLIST.md`
+12. `docs/COMMON_FAILURE_MODES.md`
+13. `docs/HANDOFF.md`
 
 ## Required Orchestrator Behavior
 
