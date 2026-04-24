@@ -4,6 +4,12 @@ This repo is a standalone harness for running **continuous recurrent-depth resea
 
 It began as internal infrastructure for experimenting with how BOTCOIN-style structured reasoning data could be optimized for recurrent-depth training and evaluation. That narrower workflow was generalized into a standalone tool for exploring recurrent-depth improvement on any scenario with editable data format, training recipes, controls, benchmarks, and loop logic.
 
+The raw source corpus used in those early experiments is available here:
+
+- `botcoinmoney/dacr-lt-training`: https://huggingface.co/datasets/botcoinmoney/dacr-lt-training
+
+That dataset was adjusted and configured for preliminary recurrent-depth natural-language experimentation, and is best treated as a source corpus to prune or reshape for the specific training setup being tested.
+
 It is built for three modes:
 
 - `Codex` or `Claude Code` in your IDE
