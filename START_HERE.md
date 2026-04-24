@@ -41,7 +41,7 @@ Edit data inputs:
 
 Edit transform surface:
 
-- change `data_recipes.yaml` when you want to alter supervision format, style, evidence structure, or control variants
+- change `data_recipes.yaml` when altered supervision format, style, evidence structure, or control variants are needed
 
 ## Run
 
@@ -59,7 +59,7 @@ rdh loop --workspace .
 
 ## If You Are Using Codex Or Claude Code
 
-Keep `provider: none`, then paste `agent_bootstrap.md` into your IDE agent once.
+Keep `provider: none`, then paste `agent_bootstrap.md` into the IDE agent once.
 
 ## If You Are Using APIs
 

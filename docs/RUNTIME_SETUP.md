@@ -42,7 +42,7 @@ The repo needs a lightweight setup path that still behaves predictably across ma
 
 ## Full Structural Simulation
 
-If you want to verify the end-to-end orchestration flow locally before using real hardware:
+To verify the end-to-end orchestration flow locally before using real hardware:
 
 ```bash
 bash scripts/simulate_full_loop.sh

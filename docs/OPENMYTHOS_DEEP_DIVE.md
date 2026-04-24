@@ -56,7 +56,7 @@ Harness knob:
 
 ### 6. Per-loop adapters
 
-OpenMythos uses loop-specific low-rank modulation. This is worth testing carefully, but your prior findings mean it must be judged against scramble controls and absolute deep-depth performance so it does not get mistaken for shallow format repair.
+OpenMythos uses loop-specific low-rank modulation. This is worth testing carefully, but the prior findings bundled into this repo mean it must be judged against scramble controls and absolute deep-depth performance so it does not get mistaken for shallow format repair.
 
 Harness knob:
 
@@ -94,4 +94,4 @@ Harness knob:
 
 ## Bottom Line
 
-`OpenMythos` is helpful as a menu of recurrent-depth hypotheses. It is not strong enough to hardcode into the harness as truth. The right use is exactly what the harness now does: expose the plausible mechanisms as reusable knob families and force them through the stronger evaluation controls learned from your prior runs.
+`OpenMythos` is helpful as a menu of recurrent-depth hypotheses. It is not strong enough to hardcode into the harness as truth. The right use is what the harness does here: expose the plausible mechanisms as reusable knob families and force them through the stronger evaluation controls learned from earlier recurrent-depth runs.

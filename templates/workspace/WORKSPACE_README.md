@@ -6,12 +6,12 @@ Recommended loop:
 
 1. Add manual datasets or repos to `manual_data_sources.yaml`.
 2. Optionally copy local corpora into `datasets/`.
-3. Edit `pipeline.yaml` so `execution.base_model_preset`, `execution.commands.train`, and `execution.commands.eval` point at your real stack.
-4. Edit `data_recipes.yaml` if you want different supervision or control formats.
+3. Edit `pipeline.yaml` so `execution.base_model_preset`, `execution.commands.train`, and `execution.commands.eval` point at the real stack.
+4. Edit `data_recipes.yaml` if different supervision or control formats are needed.
 5. Run `rdh refresh-research --workspace .`
 6. Run `rdh discover-data --workspace .`
 7. Run `rdh run-cycle --workspace .` or `rdh loop --workspace .`
-8. If you are using Codex or Claude Code, load `agent_bootstrap.md` into the session.
+8. If using Codex or Claude Code, load `agent_bootstrap.md` into the session.
 9. Review `findings.md`, `HANDOFF.md`, and the latest `reports/cycle-*.md` after each cycle.
 
 The harness keeps snapshots in:
@@ -35,4 +35,4 @@ Default base model presets:
 - `ouro_1_4b_thinking` -> `ByteDance/Ouro-1.4B-Thinking`
 - `ouro_2_6b_thinking` -> `ByteDance/Ouro-2.6B-Thinking`
 
-If you need a different checkpoint, set `execution.base_model` and it will override the preset.
+If a different checkpoint is needed, set `execution.base_model` and it will override the preset.

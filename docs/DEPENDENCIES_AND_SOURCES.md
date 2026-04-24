@@ -55,7 +55,7 @@ Purpose:
 
 ### 4. Standard benchmark sources
 
-Use your standard internal or public access path for:
+Use a standard internal or public access path for:
 
 - HotpotQA
 - MuSiQue

@@ -1,6 +1,6 @@
 # Command Contracts
 
-The built-in research pipeline expects your external commands to write JSON to the provided `metrics_path`.
+The built-in research pipeline expects external commands to write JSON to the supplied `metrics_path`.
 
 ## Train Command
 

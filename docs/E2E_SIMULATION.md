@@ -1,6 +1,6 @@
 # E2E Simulation
 
-Run this when you want a full local sanity check of the orchestration path without needing a real GPU cluster.
+Run this for a full local sanity check of the orchestration path without needing a real GPU cluster.
 
 It simulates:
 
