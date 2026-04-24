@@ -2,6 +2,8 @@
 
 This repo is a standalone harness for running **continuous recurrent-depth research loops** with as little human involvement as possible after setup.
 
+It began as internal infrastructure for experimenting with how BOTCOIN-style structured reasoning data could be optimized for recurrent-depth training and evaluation. That narrower workflow was generalized into a standalone tool for exploring recurrent-depth improvement on any scenario with editable data format, training recipes, controls, benchmarks, and loop logic.
+
 It is built for three modes:
 
 - `Codex` or `Claude Code` in your IDE
@@ -23,7 +25,7 @@ The human should mostly do setup, occasional heartbeat checks, and strategic int
 
 ## Full Simulation
 
-If you want to sanity-check the whole orchestration path locally before running on real hardware:
+To sanity-check the whole orchestration path locally before running on real hardware:
 
 ```bash
 bash scripts/simulate_full_loop.sh
@@ -43,7 +45,7 @@ rdh init-workspace --workspace ./rdh-workspace
 cd ./rdh-workspace
 ```
 
-If you want to force a profile instead of auto-detecting:
+To force a profile instead of auto-detecting:
 
 ```bash
 make setup-single
@@ -51,10 +53,10 @@ make setup-multi
 make setup-cluster
 ```
 
-Then do only these edits:
+Then make only these edits:
 
-1. Put your local dataset in `datasets/` or point `manual_data_sources.yaml` at it.
-2. Pick `execution.base_model_preset` in `pipeline.yaml`, or override with `execution.base_model` if you need a different checkpoint.
+1. Put the working dataset in `datasets/` or point `manual_data_sources.yaml` at it.
+2. Pick `execution.base_model_preset` in `pipeline.yaml`, or override with `execution.base_model` if a different checkpoint is needed.
 3. Set `execution.commands.train` and `execution.commands.eval` in `pipeline.yaml`.
 4. Optionally set `execution.commands.probe`.
 5. Choose `idea_generation.llm.provider`:
@@ -72,11 +74,11 @@ rdh loop --workspace . --max-cycles 0
 
 ## Lightweight IDE Mode
 
-If you want Codex or Claude Code to drive the loop from your IDE:
+To run the loop from Codex or Claude Code in an IDE:
 
 1. Keep `idea_generation.llm.provider: none`
 2. Open the workspace
-3. Paste the contents of `agent_bootstrap.md` to your agent once
+3. Paste the contents of `agent_bootstrap.md` into the IDE agent once
 4. Let it run
 
 The harness still handles the file structure, run logging, findings updates, handoff updates, and git commits.
@@ -140,7 +142,7 @@ The intent is simple:
 
 This is not a toy planner and it no longer ships with a mock runner.
 
-The built-in execution path is a real multi-stage orchestration layer around your actual model stack:
+The built-in execution path is a real multi-stage orchestration layer around the actual model stack:
 
 1. resolve a local dataset source
 2. materialize candidate/control/eval dataset variants from `data_recipes.yaml`
@@ -152,7 +154,7 @@ The built-in execution path is a real multi-stage orchestration layer around you
 8. aggregate control-aware metrics
 9. write findings, handoff, reports, and git commits
 
-You plug in your actual train/eval/probe commands. The harness plugs them into a repeatable recurrent-depth research loop.
+The only required project-specific integration is the train/eval/probe command layer. The harness handles the recurrent research loop around it.
 
 ## The Smallest Working `pipeline.yaml` Edits
 
@@ -189,7 +191,7 @@ execution:
       --metrics-path {{metrics_path}}
 ```
 
-Your commands should write JSON metrics to `{{metrics_path}}`.
+The external commands should write JSON metrics to `{{metrics_path}}`.
 
 ## Base Model Presets
 
@@ -199,7 +201,7 @@ The default pipeline now ships with decided public recurrent-depth presets:
 - `ouro_1_4b_thinking` -> `ByteDance/Ouro-1.4B-Thinking`
 - `ouro_2_6b_thinking` -> `ByteDance/Ouro-2.6B-Thinking`
 
-Set `execution.base_model_preset` to choose one. If you need something else, set `execution.base_model` and it will override the preset.
+Set `execution.base_model_preset` to choose one. If a different checkpoint is needed, set `execution.base_model` and it will override the preset.
 
 ## Data Format Is First-Class
 
@@ -215,7 +217,7 @@ That is why each workspace includes `data_recipes.yaml`, which controls the data
 - `boundary_markers`
 - `contrastive_correction`
 
-You can materialize a variant directly to inspect it:
+A variant can be materialized directly for inspection:
 
 ```bash
 rdh materialize-data \
@@ -229,7 +231,7 @@ This is intentional: changing data structure, format, style, and supervision sur
 
 ## Research Controls Baked In
 
-The loop is grounded by the prior findings you provided:
+The loop is grounded by the prior recurrent-depth findings distilled in this repo:
 
 - no-adapter baseline depth curves are mandatory
 - absolute deep-depth performance matters as much as slope
@@ -259,10 +261,23 @@ See:
 - [docs/RUNTIME_SETUP.md](/root/recurrent-depth-autoresearch-harness/docs/RUNTIME_SETUP.md)
 - [docs/E2E_SIMULATION.md](/root/recurrent-depth-autoresearch-harness/docs/E2E_SIMULATION.md)
 
+## Influences
+
+Several design choices in this harness were shaped by recurrent-depth and latent-reasoning work that kept recurring during the research process:
+
+- `Geiping et al. 2025`, *Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach*
+- `Kohli et al. 2026`, *Loop, Think, & Generalize: Implicit Reasoning in Recurrent-Depth Transformers*
+- `Wei et al. 2025`, *SIM-CoT: Supervised Implicit Chain-of-Thought*
+- `Jeddi et al. 2026`, *LoopFormer: Elastic-Depth Looped Transformers for Latent Reasoning via Shortcut Modulation*
+- `Prairie et al. 2026`, *Parcae: Scaling Laws For Stable Looped Language Models*
+- `OpenMythos`: https://github.com/kyegomez/OpenMythos
+
+Those influences show up here as concrete harness features rather than as hardcoded beliefs: depth sweeps, scramble controls, evidence ablations, structural data recipes, dynamic recurrent knob families, and control-aware ranking.
+
 ## Workspace Files That Matter
 
 - `pipeline.yaml`: mission, knobs, commands, loop behavior
-- `manual_data_sources.yaml`: local or remote sources you want surfaced
+- `manual_data_sources.yaml`: local or remote sources to surface
 - `data_recipes.yaml`: editable data-format and structure transforms
 - `agent_bootstrap.md`: one-shot kickoff prompt for Codex/Claude
 - `findings.md`: rolling findings log
@@ -289,4 +304,4 @@ make test
 
 ## Outcome
 
-Someone should be able to clone or fork this, point it at a base model and local data, add a train/eval command, choose Codex/Claude or API mode, and then let it keep iterating with minimal ongoing supervision.
+The intended outcome is a repo that can be cloned or forked, pointed at a base model and local data, given train/eval commands, run in Codex/Claude or API mode, and then left to iterate with minimal ongoing supervision.
